@@ -9,13 +9,24 @@ services:
       MYSQL_DATABASE: video
     networks:
       video: {}
+    volumes:
+      - db:/var/lib/mysql
 
   app:
     build: .
-    ports:
       - 3000:3000
     networks:
       video: {} 
 
+  caddy:
+    image: caddy:2.3.0
+    volumes:
+      - caddy:/data
+      - Caddyfile:/etc/caddy/Caddyfile
+
 networks:
   video: {}
+
+volumes:
+  db: {}
+  caddy: {}
