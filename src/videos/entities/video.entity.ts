@@ -1,7 +1,7 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { VideoItem } from './video-item.entity';
 
-@Entity()
+@Entity({ name: 'videos' })
 export class Video {
   @PrimaryGeneratedColumn()
   id: number;

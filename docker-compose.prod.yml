@@ -7,10 +7,15 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: video
+    networks:
+      video: {}
+
   app:
     build: .
     ports:
       - 3000:3000
+    networks:
+      video: {}
 
 networks:
   video: {}

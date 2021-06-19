@@ -29,7 +29,7 @@ export class VideosService {
       },
     });
 
-    if (search) {
+    if (!search) {
       throw new BadRequestException('Video already exists');
     }
 

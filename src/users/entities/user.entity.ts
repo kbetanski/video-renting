@@ -1,8 +1,9 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Exclude } from 'class-transformer';
 import { Role } from 'src/auth/enums/role.enum';
+import { Order } from 'src/orders/entities/order.entity';
 
-@Entity()
+@Entity({ name: 'users' })
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
@@ -25,6 +26,9 @@ export class User {
 
   @Column()
   role: Role;
+
+  @OneToMany(() => Order, (order) => order.user)
+  orders: Order[];
 
   public constructor(partial: Partial<User>) {
     Object.assign(this, partial);

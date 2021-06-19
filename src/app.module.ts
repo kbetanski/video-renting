@@ -9,6 +9,7 @@ import { VideosModule } from './videos/videos.module';
 import { OrdersModule } from './orders/orders.module';
 import { VideoItem } from './videos/entities/video-item.entity';
 import { Video } from './videos/entities/video.entity';
+import { Order } from './orders/entities/order.entity';
 
 @Module({
   imports: [
@@ -21,7 +22,7 @@ import { Video } from './videos/entities/video.entity';
       username: 'root',
       password: 'password',
       database: 'video',
-      entities: [User, Video, VideoItem],
+      entities: [User, Video, VideoItem, Order],
       synchronize: true,
     }),
     VideosModule,
