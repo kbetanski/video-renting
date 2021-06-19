@@ -10,6 +10,12 @@ export class Order {
   @Column()
   accepted: boolean;
 
+  @Column()
+  createdAt: Date;
+
+  @Column()
+  expiresAt: Date;
+
   @ManyToOne(() => User, (user) => user.orders)
   user: User;
 

@@ -29,6 +29,7 @@ export class OrdersService {
       accepted: false,
       user: user,
       videoItem: item,
+      createdAt: new Date(),
     });
 
     if (user.role === Role.Admin && createOrderDto.userId) {
@@ -46,6 +47,7 @@ export class OrdersService {
   public async accept(id: number): Promise<Order> {
     const order = await this.findOne(id);
     order.accepted = true;
+    order.expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
 
     const accepted = await this.ordersRepository.save(order);
 
