@@ -21,7 +21,7 @@ services:
     image: caddy:2.3.0
     volumes:
       - caddy:/data
-      - Caddyfile:/etc/caddy/Caddyfile
+      - ./Caddyfile:/etc/caddy/Caddyfile
 
 networks:
   video: {}
