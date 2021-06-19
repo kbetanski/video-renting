@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: video
+  app:
+    build: .
+    ports:
+      - 3000:3000
+
+networks:
+  video: {}

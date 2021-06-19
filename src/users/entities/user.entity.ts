@@ -1,5 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { Exclude } from 'class-transformer';
+import { Role } from 'src/auth/enums/role.enum';
 
 @Entity()
 export class User {
@@ -21,6 +22,9 @@ export class User {
   @Exclude()
   @Column()
   password: string;
+
+  @Column()
+  role: Role;
 
   public constructor(partial: Partial<User>) {
     Object.assign(this, partial);

@@ -5,6 +5,8 @@ import * as bcrypt from 'bcrypt';
 
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './entities/user.entity';
+import { Role } from 'src/auth/enums/role.enum';
+import { ChangePasswordUserDto } from './dto/change-password-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -13,7 +15,7 @@ export class UsersService {
     private readonly usersRepository: Repository<User>,
   ) {}
 
-  public async create(createUserDto: CreateUserDto): Promise<User> {
+  public async register(createUserDto: CreateUserDto): Promise<User> {
     const search = await this.usersRepository.find({
       where: { username: createUserDto.username },
     });
@@ -27,6 +29,24 @@ export class UsersService {
     createUserDto.password = await bcrypt.hash(createUserDto.password, salt);
 
     const user = this.usersRepository.create(createUserDto);
+    user.role = Role.User;
+
+    return await this.usersRepository.save(user);
+  }
+
+  public async changePassword(
+    changePasswordUserDto: ChangePasswordUserDto,
+    username: string,
+  ): Promise<User> {
+    const user = await this.findByUsername(username);
+
+    const salt = bcrypt.genSaltSync(10);
+    const newPassword = await bcrypt.hash(
+      changePasswordUserDto.newPassword,
+      salt,
+    );
+
+    user.password = newPassword;
 
     return await this.usersRepository.save(user);
   }

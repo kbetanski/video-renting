@@ -7,6 +7,8 @@ import { AuthModule } from './auth/auth.module';
 import { User } from './users/entities/user.entity';
 import { VideosModule } from './videos/videos.module';
 import { OrdersModule } from './orders/orders.module';
+import { VideoItem } from './videos/entities/video-item.entity';
+import { Video } from './videos/entities/video.entity';
 
 @Module({
   imports: [
@@ -19,12 +21,12 @@ import { OrdersModule } from './orders/orders.module';
       username: 'root',
       password: 'password',
       database: 'video',
-      entities: [User],
+      entities: [User, Video, VideoItem],
       synchronize: true,
     }),
     VideosModule,
     OrdersModule,
-  ]
+  ],
 })
 export class AppModule {
   constructor(private connection: Connection) {}

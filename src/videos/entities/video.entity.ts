@@ -1,5 +1,7 @@
-import { Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { VideoItem } from './video-item.entity';
 
+@Entity()
 export class Video {
   @PrimaryGeneratedColumn()
   id: number;
@@ -15,4 +17,7 @@ export class Video {
 
   @Column()
   price: number;
+
+  @OneToMany(() => VideoItem, (videoItem) => videoItem.video)
+  videoItems: VideoItem[];
 }
