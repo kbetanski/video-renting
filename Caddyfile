@@ -1,0 +1,3 @@
+project.betanski.dev
+
+reverse_proxy localhost:3000
