@@ -16,17 +16,16 @@ import { Role } from 'src/auth/enums/role.enum';
 import { Roles } from 'src/auth/role.decorator';
 import { RolesGuard } from 'src/auth/role.guard';
 
+@UseInterceptors(ClassSerializerInterceptor)
 @Controller()
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @UseInterceptors(ClassSerializerInterceptor)
   @Post('register')
   register(@Body() createUserDto: CreateUserDto) {
     return this.usersService.register(createUserDto);
   }
 
-  @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(JwtAuthGuard)
   @Post('change-password')
   changePassword(
@@ -39,14 +38,12 @@ export class UsersController {
     );
   }
 
-  @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(JwtAuthGuard)
   @Get('profile')
   getProfile(@Request() req) {
-    return this.usersService.findByUsername(req.user.username);
+    return this.usersService.findByUsername(req.user.id);
   }
 
-  @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.Admin)
   @Get('profile')

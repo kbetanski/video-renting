@@ -16,11 +16,9 @@ export class UsersService {
   ) {}
 
   public async register(createUserDto: CreateUserDto): Promise<User> {
-    const search = await this.usersRepository.find({
-      where: { username: createUserDto.username },
-    });
+    const search = await this.findByUsername(createUserDto.username);
 
-    if (search.length !== 0) {
+    if (search) {
       throw new BadRequestException('Username already in use');
     }
 
@@ -36,9 +34,9 @@ export class UsersService {
 
   public async changePassword(
     changePasswordUserDto: ChangePasswordUserDto,
-    username: string,
+    userId: number,
   ): Promise<User> {
-    const user = await this.findByUsername(username);
+    const user = await this.findOne(userId);
 
     const salt = bcrypt.genSaltSync(10);
     const newPassword = await bcrypt.hash(

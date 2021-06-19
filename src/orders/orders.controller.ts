@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Param, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  UseGuards,
+  Request,
+} from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { Roles } from 'src/auth/role.decorator';
@@ -13,8 +21,15 @@ export class OrdersController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.Admin, Role.User)
   @Post()
-  create(@Body() createOrderDto: CreateOrderDto) {
-    return this.ordersService.create(createOrderDto);
+  order(@Body() createOrderDto: CreateOrderDto, @Request() request) {
+    return this.ordersService.order(createOrderDto, request.user.id);
+  }
+
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.Admin)
+  @Post(':id')
+  accept(@Param('id') id: string) {
+    return this.ordersService.accept(+id);
   }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
