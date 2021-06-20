@@ -1,3 +1,4 @@
 project.betanski.dev
 
 reverse_proxy app:3000
+header Access-Control-Allow-Headers "*"
